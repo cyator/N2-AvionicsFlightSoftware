@@ -87,26 +87,24 @@ void reconnect()
   }
 }
 
-void sendTelemetryWiFi(SendValues sv[5])
+void sendTelemetryWiFi(LogData ld)
 {
 
-  for (int i = 0; i < 5; i++)
-  {
-    // publish whole message i json
-    char mqttMessage[200];
-    sprintf(mqttMessage, "{\"timestamp\":%lld,\"altitude\":%.3f,\"state\":%d,\"longitude\":%.8f,\"latitude\":%.8f}", sv[i].timeStamp, sv[i].altitude, sv[i].state, sv[i].longitude, sv[i].latitude);
-    client.publish("esp32/message", mqttMessage);
-  }
+  // publish whole message i json
+  char mqttMessage[200];
+
+  sprintf(mqttMessage, "{\"timestamp\":%lld,\"altitude\":%.3f,\"ax\":%.3f,\"ay\":%.3f,\"az\":%.3f,\"gx\":%.3f,\"gy\":%.3f,\"gz\":%.3f,\"filtered_s\":%.3f,\"filtered_v\":%.3f,\"filtered_a\":%.3f,\"state\":%d}", ld.timeStamp, ld.altitude, ld.ax, ld.ay, ld.az, ld.gx, ld.gy, ld.gz, ld.filtered_s, ld.filtered_v, ld.filtered_a, ld.state);
+  client.publish("esp32/message", mqttMessage);
 }
 
-void handleWiFi(SendValues sv[5])
+void handleWiFi(LogData ld)
 {
   if (!client.connected())
   {
     reconnect();
   }
   client.loop();
-  sendTelemetryWiFi(sv);
+  sendTelemetryWiFi(ld);
 }
 
 #endif

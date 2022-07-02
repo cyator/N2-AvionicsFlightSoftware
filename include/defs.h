@@ -38,11 +38,11 @@ const uint8_t GPS_RX_PIN = 16;
 const BaseType_t pro_cpu = 0;
 const BaseType_t app_cpu = 1;
 
-const char *ssid = "S7 edge";
-const char *password = "almg76061";
+const char *ssid = "onboard";
+const char *password = "987654321";
 
 // MQTT Broker IP address
-const char *mqtt_server = "192.168.43.133";
+const char *mqtt_server = "192.168.4.4";
 
 const int MQQT_PORT = 1883;
 
